@@ -57,7 +57,9 @@
             100% { transform: translate(50px, 100px) scale(1.2); }
         }
 
-        #particles-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        #particles-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        
+        /* Particle Glow (Debu Emas) */
         .particle {
             position: absolute; background: var(--gold); border-radius: 50%;
             opacity: 0.5; box-shadow: 0 0 10px rgba(197, 168, 128, 0.8);
@@ -68,6 +70,33 @@
             20% { opacity: 0.8; }
             80% { opacity: 0.5; }
             100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Petal/Leaves Falling Animation */
+        .petal {
+            position: absolute; background: rgba(197, 168, 128, 0.6);
+            /* Membentuk lekukan daun/kelopak */
+            border-radius: 15px 0 15px 0; 
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.8; }
+            85% { opacity: 0.8; }
+            100% { transform: translate(15vw, 110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Swaying Floral Ornaments */
+        .floral-sway {
+            animation: sway 6s ease-in-out infinite;
+            transform-origin: bottom center;
+            opacity: 0.85;
+            margin: 10px auto;
+            display: block;
+        }
+        @keyframes sway {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
         }
 
         .floating { animation: floatElement 4s ease-in-out infinite; }
@@ -160,8 +189,10 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             position: relative; z-index: 1; max-width: 900px; margin: 0 auto;
         }
+        /* Penyesuaian tinggi section yang tidak butuh 100vh full */
+        #turut-mengundang { min-height: auto; padding: 60px 20px; }
         
-        .hero-title { font-size: 5.5rem; line-height: 1.2; margin: 20px 0; }
+        .hero-title { font-size: 5.5rem; line-height: 1.2; margin: 10px 0 20px; }
         .line-art { width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); margin: 30px auto; }
         
         .greeting { font-size: 1.1rem; color: #555; margin-bottom: 30px; max-width: 600px; }
@@ -202,40 +233,31 @@
         .closing-title { font-size: 5rem; margin: 20px 0; }
 
         /* =========================================
-           RESPONSIVE MOBILE STYLES (Dioptimalkan)
+           RESPONSIVE MOBILE STYLES
            ========================================= */
         @media (max-width: 768px) {
-            /* Menyesuaikan ukuran font yang terlalu besar di layar kecil */
             .cover-title { font-size: 3rem; margin-bottom: 20px; }
             .hero-title { font-size: 3.2rem; }
             .closing-title { font-size: 3.2rem; }
             .couple-name { font-size: 2.2rem; }
             .ampersand { font-size: 3rem; margin: 10px 0; }
             
-            /* Menyesuaikan padding container agar tidak sesak */
             section { padding: 60px 15px; }
+            #turut-mengundang { padding: 40px 15px; }
             
             .greeting { font-size: 1rem; }
             .parents { font-size: 0.85rem; padding: 0 10px; }
             
-            /* Event Box Adjustments */
             .glass-box { padding: 25px 15px; }
             .event-title { font-size: 1.6rem; }
             .event-time { display: block; width: fit-content; margin: 10px auto; font-size: 0.85rem; }
             
-            /* COUNTDOWN DIJADIKAN GRID (2 Baris 2 Kolom) AGAR RAPI DI HP */
-            #countdown { 
-                display: grid; 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 15px; 
-            }
+            #countdown { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
             .time-box { min-width: unset; padding: 15px 10px; }
             .time-box span { font-size: 1.8rem; }
             
-            /* Map Adjustments */
             .map-container { height: 250px; margin: 20px 0; }
             
-            /* RSVP / Form Adjustments */
             .form-control { padding: 12px; }
             .btn { padding: 12px 20px; width: 100%; font-size: 0.8rem; }
         }
@@ -252,6 +274,7 @@
     <div class="ambient-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
+        <!-- Wadah untuk animasi debu terbang & kelopak jatuh -->
         <div id="particles-container"></div>
     </div>
 
@@ -267,6 +290,12 @@
         
         <div class="cover-content floating">
             <p class="cover-subtitle" data-aos="fade-down" data-aos-duration="1000">The Wedding Of</p>
+            <!-- SVG Floral Ornament Top -->
+            <svg class="floral-sway" width="60" height="40" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 50 Q 50 20 20 10 M50 50 Q 50 20 80 10" stroke="var(--gold)" stroke-width="2" fill="none"/>
+                <path d="M20 10 Q 30 0 40 15 Q 25 25 20 10" fill="var(--gold-light)"/>
+                <path d="M80 10 Q 70 0 60 15 Q 75 25 80 10" fill="var(--gold-light)"/>
+            </svg>
             <h1 class="script cover-title shine-text" data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="300">Fahmi & Kamala</h1>
             
             <div class="guest-box" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
@@ -284,6 +313,14 @@
         <!-- Hero Section -->
         <section id="hero" class="text-center">
             <p class="cover-subtitle" data-aos="fade-down" data-aos-duration="1200" style="color: var(--charcoal);">Resepsi Pernikahan</p>
+            
+            <!-- Floral Ornament -->
+            <svg class="floral-sway" data-aos="zoom-in" width="50" height="50" viewBox="0 0 50 50" fill="none">
+                <path d="M25 50 Q 25 25 5 5 M25 50 Q 25 25 45 5" stroke="var(--gold)" stroke-width="2"/>
+                <path d="M5 5 Q 15 0 20 15 Q 5 20 5 5" fill="var(--gold)"/>
+                <path d="M45 5 Q 35 0 30 15 Q 45 20 45 5" fill="var(--gold-light)"/>
+            </svg>
+
             <h1 class="script hero-title shine-text floating" data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="300">Fahmi & Kamala</h1>
             <div class="line-art" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600"></div>
             <p class="serif" style="font-size:1.1rem; font-weight:600; letter-spacing:2px;" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">AHAD, 20 SEPTEMBER 2026</p>
@@ -354,6 +391,33 @@
             </a>
         </section>
 
+        <!-- SEKSI BARU: Turut Mengundang & NB Bingkisan -->
+        <section id="turut-mengundang" class="text-center">
+            <!-- Floral Ornament -->
+            <svg class="floral-sway" data-aos="zoom-in" width="60" height="30" viewBox="0 0 100 50" fill="none">
+                <path d="M0 50 Q 50 20 100 50" stroke="var(--gold)" stroke-width="2"/>
+                <path d="M50 35 Q 60 15 75 25 Q 65 40 50 35" fill="var(--gold-light)"/>
+                <path d="M50 35 Q 40 15 25 25 Q 35 40 50 35" fill="var(--gold)"/>
+            </svg>
+
+            <h2 class="script shine-text" style="font-size: 3.5rem; margin-bottom: 25px;" data-aos="fade-down">Turut Mengundang</h2>
+            
+            <div data-aos="fade-up" data-aos-delay="200" style="margin-bottom: 40px; line-height: 1.8;">
+                <p style="font-weight: 600; font-size: 1.1rem; color: var(--charcoal); margin-bottom: 10px;">Ahmad Syarif Hidayatullah & Mar'atus Sholikah</p>
+                <p style="font-weight: 600; font-size: 1.1rem; color: var(--charcoal); margin-bottom: 25px;">Ahmad Aghus Ulinnuha & Noorya Malichatun Nisa</p>
+                <p class="serif" style="font-size: 1rem; color: #555; max-width: 600px; margin: 0 auto;">Keluarga Besar Bani Abdan, Bani Abu Ya'la & Keluarga Besar Mempelai Wanita</p>
+            </div>
+
+            <!-- Box NB Tanpa Bingkisan -->
+            <div class="glass-box" data-aos="zoom-in" data-aos-delay="400" style="padding: 25px 20px; max-width: 500px; margin: 0 auto; border: 1px solid var(--gold); border-radius: 12px;">
+                <i class="fas fa-gift pulse-icon" style="font-size: 1.5rem; margin-top: 0;"></i>
+                <p style="font-size: 0.95rem; font-weight: 500; color: #444; line-height: 1.6; margin-top: 10px;">
+                    <strong style="color: var(--gold); font-family: var(--font-serif); font-size: 1.2rem;">NB:</strong><br>
+                    Tanpa Mengurangi Rasa Hormat, Kami Mohon Agar Bapak/ Ibu/ Saudara/ i Tidak Membawa Bingkisan
+                </p>
+            </div>
+        </section>
+
         <!-- RSVP & Wishes -->
         <section id="rsvp" class="text-center">
             <h2 class="script shine-text" style="font-size: 3.5rem; margin-bottom: 15px;" data-aos="fade-down">Do'a & Ucapan</h2>
@@ -387,7 +451,14 @@
 
         <!-- Closing Section -->
         <section id="closing" class="text-center">
-            <p data-aos="fade-up" style="font-size: 1rem; color:#555; margin-bottom: 20px; line-height: 1.6;">Atas kehadiran dan do'a restunya,<br>kami mengucapkan terima kasih.</p>
+            <!-- Floral Ornament End -->
+            <svg class="floral-sway" data-aos="fade-up" width="60" height="40" viewBox="0 0 100 50" fill="none">
+                <path d="M50 0 Q 50 30 20 40 M50 0 Q 50 30 80 40" stroke="var(--gold)" stroke-width="2"/>
+                <path d="M20 40 Q 30 50 40 35 Q 25 25 20 40" fill="var(--gold)"/>
+                <path d="M80 40 Q 70 50 60 35 Q 75 25 80 40" fill="var(--gold-light)"/>
+            </svg>
+
+            <p data-aos="fade-up" style="font-size: 1rem; color:#555; margin: 10px 0 20px; line-height: 1.6;">Atas kehadiran dan do'a restunya,<br>kami mengucapkan terima kasih.</p>
             <h3 class="serif" style="font-size: 1.4rem; color:var(--gold);" data-aos="zoom-in" data-aos-delay="200">Wassalamu'alaikum Warahmatullahi Wabarakatuh</h3>
             
             <div class="line-art" data-aos="fade-up" data-aos-delay="400"></div>
@@ -424,10 +495,11 @@
         // 2. Initialize AOS
         AOS.init({ once: false, offset: 50 });
 
-        // 3. Background Particles
+        // 3. Gabungan Animasi Debu Melayang & Kelopak Jatuh (Living Florals)
         const particleContainer = document.getElementById('particles-container');
         if(particleContainer) {
-            for (let i = 0; i < 25; i++) {
+            // Animasi Partikel Debu (Naik)
+            for (let i = 0; i < 20; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 const size = Math.random() * 4 + 1;
@@ -437,6 +509,19 @@
                 particle.style.animationDuration = `${Math.random() * 15 + 10}s`;
                 particle.style.animationDelay = `${Math.random() * 5}s`;
                 particleContainer.appendChild(particle);
+            }
+            
+            // Animasi Kelopak Gugur (Turun)
+            for (let i = 0; i < 15; i++) {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+                const size = Math.random() * 8 + 6; // Ukuran kelopak 6-14px
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size}px`;
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.animationDuration = `${Math.random() * 10 + 8}s`; // Durasi jatuh 8-18s
+                petal.style.animationDelay = `${Math.random() * 10}s`;
+                particleContainer.appendChild(petal);
             }
         }
 
